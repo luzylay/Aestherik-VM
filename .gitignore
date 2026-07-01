@@ -1,0 +1,23 @@
+# Entornos y cachés
+venv/
+__pycache__/
+*.pyc
+.env
+node_modules/
+
+# Modelos de IA descargados (Whisper)
+models/
+*.bin
+*.pt
+
+# Grabaciones (pueden contener datos sensibles / PII)
+recordings/*.wav
+recordings/*.mp3
+
+# Datos de bases y logs
+mongo_data/
+*.log
+
+# Sistema
+.DS_Store
+Thumbs.db

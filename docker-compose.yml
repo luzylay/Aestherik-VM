@@ -1,0 +1,43 @@
+services:
+  asterisk:
+    build: ./telefonia
+    container_name: marcacion_asterisk
+    network_mode: host
+    volumes:
+      - ./telefonia:/etc/asterisk
+      - ./recordings:/var/spool/asterisk/recording
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:4.4
+    container_name: marcacion_mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: marcacion_redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  dashboard:
+    build: ./dashboard
+    container_name: marcacion_dashboard
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./recordings:/call-controller
+    depends_on:
+      - mongo
+      - redis
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
