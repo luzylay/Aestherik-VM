@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   asterisk:
     build: ./telefonia
@@ -30,13 +32,48 @@ services:
   dashboard:
     build: ./dashboard
     container_name: marcacion_dashboard
-    ports:
-      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://admin:admin123@mongo:27017/marcacion_db?authSource=admin
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RECORDINGS_DIR=/call-controller
+      - DASHBOARD_SECRET_KEY=clave_secreta_para_demo_super_secreta
+      - DASHBOARD_USER=admin
+      - DASHBOARD_PASS=admin123
     volumes:
       - ./recordings:/call-controller
     depends_on:
       - mongo
       - redis
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: ./call-controller
+      dockerfile: Dockerfile.worker
+    container_name: marcacion_worker
+    environment:
+      - MONGO_URI=mongodb://admin:admin123@mongo:27017/marcacion_db?authSource=admin
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - RECORDINGS_DIR=/recordings
+    volumes:
+      - ./recordings:/recordings
+    depends_on:
+      - mongo
+      - redis
+    restart: unless-stopped
+
+  nginx:
+    build: ./nginx
+    container_name: marcacion_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - dashboard
     restart: unless-stopped
 
 volumes:

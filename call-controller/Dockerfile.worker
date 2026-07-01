@@ -1,0 +1,18 @@
+FROM python:3.10-slim
+
+# Instalar ffmpeg indispensable para decodificación de audio en Whisper
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copiar requerimientos e instalarlos
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar configuración y script del worker
+COPY config.py .
+COPY worker.py .
+
+CMD ["python", "worker.py"]

@@ -2,3 +2,5 @@ requests
 websocket-client
 faster-whisper
 pymongo
+redis
+python-dotenv

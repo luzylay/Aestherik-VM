@@ -21,3 +21,10 @@ mongo_data/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Certificados SSL/TLS locales
+certs/
+*.pem
+*.crt
+*.key
+
