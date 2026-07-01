@@ -12,6 +12,7 @@
 
 ## 📖 Índice
 
+- [Acerca de Aestherik-VM (ABOUT)](docs/ABOUT.md)
 - [Vista General para Usuarios](#-vista-general-para-usuarios)
 - [Arquitectura Técnica](#%EF%B8%F0-arquitectura-técnica)
 - [Características Principales](#-características-principales)
@@ -160,6 +161,7 @@ asistente-marcacion-inteligente/
 ├── CODE_OF_CONDUCT.md       # Normas de convivencia del proyecto
 ├── SECURITY.md              # Políticas y reporte de vulnerabilidades
 ├── certs/                   # Certificados SSL locales (ignorado por Git)
+├── docs/                    # Documentación adicional del proyecto (ABOUT, etc.)
 ├── telefonia/               # Archivo de construcción y configs de Asterisk
 ├── call-controller/         # Scripts de control de llamadas y Worker de Whisper
 │   ├── config.py            # Carga variables de entorno para scripts
